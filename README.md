@@ -144,3 +144,13 @@ Better, only 1 map handing both conditions on index of maxRating.
 2. "classnames" dependency for changing class in same loop, boolean-based
 
 
+### REACT PROJECT 3 (9 Sep 2023)
+
+**Custom Hook** : *useWindowSize.js* :<br>
+Calculates & returns the *innerWidth* & *innerHeight* of current *window*.<br>
+UseCase Ex : Based on user's window size, show/hide some component. 
+Here, Cart is hidden below a certain width. <br>
+useEffect should be effective only once : mounting phase, 
+because addEventListener should be registered only once.
+eventListener remains same, so no re-rendering required.<br>
+Any reusability function can be moved to custom hook.

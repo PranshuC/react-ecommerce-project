@@ -1,7 +1,7 @@
 import "./styles.css";
-import Products from "./Products";
+import Products from "./components/Products";
 import { useState } from "react";
-import Cart from "./Cart";
+import Cart from "./components/Cart";
 
 export default function App() {
   const [cart, setCart] = useState({});
