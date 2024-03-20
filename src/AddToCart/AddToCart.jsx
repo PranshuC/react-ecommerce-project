@@ -9,7 +9,7 @@ function AddToCart({ product, increaseQuantity, decreaseQuantity, cart }) {
   }
   // check item quantity in the cart then show
   // either + & - OR show "Add to Cart" button
-  const quantity = cart[product.id] ? cart[product.id].quantity : 0; //ternary operator
+  const quantity = cart[product.id] ? cart[product.id].quantity : 0; //iternary operator
   if (quantity === 0) {
     return (
       <div>
@@ -28,7 +28,3 @@ function AddToCart({ product, increaseQuantity, decreaseQuantity, cart }) {
 }
 
 export default AddToCart;
-
-// {product, increaseQuantity, decreaseQuantity, cart}
-// passed from top-most parent repititively to final child
-// - props drilling
