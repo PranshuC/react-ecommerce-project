@@ -16,6 +16,7 @@ function Rating({ rating, maxRating }) {
             className={classNames("rating__star", {
               "rating__star--active": isActive,
             })}
+            key={index}
           />
         );
       })}

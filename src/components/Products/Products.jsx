@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react"; // named export from react package
 import ProductCard from "../ProductCard";
+// named export from react package
+import { useEffect, useState, memo } from "react";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -40,7 +42,11 @@ function getProductsApi(callback) {
   }, 1000);
 }
 
-export default function Products({ increaseQuantity, decreaseQuantity, cart }) {
+export default memo(function Products({
+  increaseQuantity,
+  decreaseQuantity,
+  cart,
+}) {
   let [gp, setGp] = useState([]);
   let [isLoading, setLoading] = useState(true);
   useEffect(
@@ -63,6 +69,7 @@ export default function Products({ increaseQuantity, decreaseQuantity, cart }) {
   } else {
     return (
       <div>
+        <Link to="/cart">View Cart </Link>
         {gp.map((product, index) => {
           return (
             <ProductCard
@@ -77,4 +84,4 @@ export default function Products({ increaseQuantity, decreaseQuantity, cart }) {
       </div>
     );
   }
-}
+});

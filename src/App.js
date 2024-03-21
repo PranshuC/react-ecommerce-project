@@ -1,7 +1,13 @@
 import "./styles.css";
 import Products from "./components/Products";
-import { useState } from "react";
 import Cart from "./components/Cart";
+import ProductsPage from "./pages/ProductsPage";
+import CartPage from "./pages/CartPage";
+import CartContext from "./context/CartContext";
+import NotFound from "./pages/NotFound";
+
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 export default function App() {
   const [cart, setCart] = useState({});
@@ -28,13 +34,22 @@ export default function App() {
     setCart(newCart);
   }
   return (
-    <div className="App">
-      <Cart cart={cart} />
-      <Products
-        increaseQuantity={increaseQuantity}
-        decreaseQuantity={decreaseQuantity}
-        cart={cart}
-      />
-    </div>
+    <CartContext.Provider value={{ cart, increaseQuantity, decreaseQuantity }}>
+      <div className="App">
+        <Routes>
+          <Route exact={true} path="/" element={<ProductsPage />} />
+          <Route exact={true} path="/cart" element={<CartPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        {/* <Cart />
+        <Products /> */}
+        {/* <Cart cart={cart} />
+        <Products
+          increaseQuantity={increaseQuantity}
+          decreaseQuantity={decreaseQuantity}
+          cart={cart}
+        /> */}
+      </div>
+    </CartContext.Provider>
   );
 }

@@ -30,7 +30,7 @@ react will always cause the re-render
 "Cart" should be available globally.<br>
 2 ways of creating : array of objects[{},{},{}] OR
 object of object {{},{},{}} data structure for the cart.
-```json
+```javascript
 cart = {
   productId : {
     id: productId,
@@ -154,3 +154,105 @@ useEffect should be effective only once : mounting phase,
 because addEventListener should be registered only once.
 eventListener remains same, so no re-rendering required.<br>
 Any reusability function can be moved to custom hook.
+
+
+### REACT PROJECT 4 (12 Sep 2023)
+
+How does **microfrontend** work?<br>
+In a microfrontend architecture, a web application is divided into smaller,
+self-contained modules or individual functions, implemented autonomously.
+Each module can be developed, tested, and deployed independently, enabling 
+teams to work on specific features or functions within the application. <br>
+**Cypress** is an end-to-end testing framework built on Mocha – JavaScript test
+framework running on and in the browser, making asynchronous testing convenient.<br>
+Earlier, *iframe* HTML tag stitched together individual pages from remote builds.
+Currently, Webpack Module Federation plugin helps multiple separate builds form SPA.<br>
+Create all components & put in NPM package. NPM registry helps keep common/global components private but sharable.
+
+How do you think your frontend in general is served? <br>
+Client requests a page. Server has multiple routes.
+Routes forward the supported requests to the appropriate controller functions.
+Controller checks that which page has to be served, get the requested data from 
+the models, create an HTML page displaying the data, and return it to the user 
+to view in the browser.
+
+How Scaler handles deployment? <br>
+Ex : scaler.com/scm.
+You could just create a react app, host it using cloudfront (act as server).
+You could upload your application on S3.
+Make your cloudfront point to the S3 folder and serve that application.
+Everything now would be your API based, there is no server required to serve.
+
+**Vercel** is a cloud platform that helps developers deploy and host their 
+React applications. It has integrations for GitHub, GitLab, and Bitbucket 
+to enable CI/CD for your React site with zero configuration. Then, you can 
+run automated tests for performance and reliability on every push.
+
+
+**Routing**<br>
+Routing version 5 was used, now Version 6 is available.
+SPA - Single Page Application.
+If React is SPA, what are we routing to & from?
+Route between different components,
+and components can act as page.
+
+**BrowserRouter** in *index.js* shows starting point for routing to happen.
+The, wrap our code in switch-case for multiple routes.
+
+In our code, there's only 1 component per page, so the code may look repititive,
+but in large apps code will be cleaner with multiple components in each page
+(Easy to maintain hierarchy).
+
+We cannot pass the data through Route directly. Ex :<br>
+\<Cart **cart={cart}** /> cannot be replaced with<br>
+\<Route path="/cart" element={\<CartPage />} **cart={cart}** /><br>
+Earlier, passing as props to just 1 child.
+But if we make them available in global state,
+all components can access them from global.
+Common ways : context api, redux, mobx.
+
+
+**context api** : Avoid *Props Drilling*
+- somehow to provide this global state. 
+(*context/CartContext.js* & *CartContext.Provider*).
+If multiple Context Providers - wrap in tag hierarchy one after other.
+- somehow use this state in the components. useContext hook. Ex :
+*const { cart, increaseQuantity, decreaseQuantity } = useContext(CartContext);* 
+in *AddToCart.jsx*. Earlier parent, now pseudo-parent provides.
+
+But due to Context, global state change causes re-render of all components.
+So, using *memo(function Products({* all the unnecessary parent re-renders are gone.
+But all the "Add to Cart" re-renders, even only 1 item's button clicked.
+**Limitation of Context** : If there is change in state, cannot subscribe to specific 
+key. It re-renders all elements in that Component.
+
+
+**Redux** : state management tool.
+It provides you with a global state.
+It would provide you with a way in which, Global state :
+- way to update this global state
+- way to consume this global state
+- way to wrap this global state with all the components
+
+Provider - wrap global state.<br>
+Store - global state management
+1. State - like DB in backend, global states are stored
+2. Reducer - like controller in backend, either write to or read from - State
+
+- Action - Ex : increase/decrease quantity (button click)
+- Dipatch - Action be dispached towards the Store (like addEventListener)
+
+Action =>  dipatched =>  Reducer => manipulate state
+=> manipulated state provided again to all components
+=> Provider
+
+
+*Route exact={true}* makes sure the regex "/" doesn't take away
+all the URLs' match after that & look for "/" exactly.
+
+Going to cart page from Products using <br>
+\<a href="/cart">View Cart \</a> <br>
+wouldnt help, because the page reloads & items' 
+list is lost. Instead, use "Link" to keep SPA : <br>
+\<Link to="/cart">View Cart \</Link>
+
