@@ -1,7 +1,9 @@
-import ProductCard from "../ProductCard";
 // named export from react package
 import { useEffect, useState, memo } from "react";
 import { Link } from "react-router-dom";
+
+import ProductCard from "../ProductCard";
+import Categories from "../Categories";
 
 const products = [
   {
@@ -70,6 +72,7 @@ export default memo(function Products({
     return (
       <div>
         <Link to="/cart">View Cart </Link>
+        <Categories />
         {gp.map((product, index) => {
           return (
             <ProductCard
