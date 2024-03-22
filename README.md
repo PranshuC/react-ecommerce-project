@@ -256,3 +256,46 @@ wouldnt help, because the page reloads & items'
 list is lost. Instead, use "Link" to keep SPA : <br>
 \<Link to="/cart">View Cart \</Link>
 
+
+### REACT PROJECT 5 (14 Sep 2023)
+
+**store.js** : Reducer - update state for actions<br>
+Multiple actions possible : switch-case. Ex : increase/decrease quantity.
+Based on action, manipulate the state :
+Add items into cart => cart = {{}, {}, {}} .
+newCart = {{}, {}, {}, {}} [item appended]. <br>
+action: {type, payload} [object with 2 keys]. 
+Type -> add/remove, payload -> items.
+
+*redux* & *react-redux* packages need to be added in dependencies.
+Redux package is lightweight, whenever interact with other framework,
+pass-on another dependency like react-redux, vue-redux, angular-redux.
+
+\<Provider store={store}> in main index.js; access in Cart,
+update in Add to Cart.
+
+**ReduxAddToCart.jsx**<br>
+*useDispatch* provides Dispatch method. <br>
+*useSelector* is a hook that takes call as the param,
+the callback has the state in it as a parameter.
+
+...a -> deepcopy, but shallow copied lower levels.
+So, for deeopcopy of lower levels too : {...a, b: {...a.b}}
+
+*lodash* package (https://lodash.com/) provides us multiple utility methods. 
+Here, omit used - remove object from (object of object).
+
+**Categories.jsx**<br>
+Instead of having all the react component API call,
+move everything to redux. Suggested : business logic not in react.
+Move the logic to store & pass action here.
+Need to create Categories Reducer, but you can have only 1 store.
+Somehow combine the Reducers together & provide in 1 store.<br>
+**stores/index.js**: { combineReducers } from "redux".
+Store & Provider are only 1, combine global state. <br>
+Enhance ability of dispatch passing method instead of object.
+So, applyMiddleware(thunk) takes function input & object output.
+React will talk to redux by dispatching something as action.
+
+HOC(higher-order component) example : 
+https://codesandbox.io/p/sandbox/hoc-ovp5ti?file=%2Fsrc%2FClickIncrease.js

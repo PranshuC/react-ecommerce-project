@@ -1,6 +1,7 @@
 import "./ProductCard.css";
-import AddToCart from "../AddToCart/AddToCart";
+import AddToCart from "../AddToCart";
 import Rating from "../Rating/Rating";
+import ReduxAddToCart from "../ReduxAddToCart";
 
 export default function ProductCard({
   product,
@@ -13,12 +14,13 @@ export default function ProductCard({
       <h2>{product.title}</h2>
       <h4>{product.price.value}</h4>
       <Rating rating={product.rating.value} maxRating={5} />
-      <AddToCart
+      {/* <AddToCart
         product={product}
         increaseQuantity={increaseQuantity}
         decreaseQuantity={decreaseQuantity}
         cart={cart}
-      />
+      /> */}
+      <ReduxAddToCart product={product} />
     </div>
   );
 }
